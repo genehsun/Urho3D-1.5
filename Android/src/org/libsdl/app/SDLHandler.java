@@ -1,5 +1,7 @@
 package org.libsdl.app;
 
+import android.util.Log;
+
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
@@ -15,7 +17,7 @@ public class SDLHandler {
 
     public static void handle() {
         while (!mQueue.isEmpty()) {
-            mQueue.poll();
+            mQueue.poll().execute();
         }
     }
 }
