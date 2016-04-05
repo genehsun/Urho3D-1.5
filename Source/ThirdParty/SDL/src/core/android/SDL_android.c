@@ -80,6 +80,7 @@ static jmethodID midAudioWriteShortBuffer;
 static jmethodID midAudioWriteByteBuffer;
 static jmethodID midAudioQuit;
 static jmethodID midPollInputDevices;
+static jmethodID midHandleSDLEvent;
 
 /* Accelerometer data storage */
 static float fLastAccelerometer[3];
@@ -159,6 +160,9 @@ void SDL_Android_Init(JNIEnv* mEnv, jclass cls, jstring filesDir)
     midPollInputDevices = (*mEnv)->GetStaticMethodID(mEnv, mActivityClass,
                                 "pollInputDevices", "()V");
 
+    midHandleSDLEvent = (*mEnv)->GetStaticMethodID(mEnv, mActivityClass,
+                                "handlSDLEvent", "()V");
+
     bHasNewData = false;
 
     if(!midGetNativeSurface || !midFlipBuffers || !midAudioInit ||
@@ -166,6 +170,12 @@ void SDL_Android_Init(JNIEnv* mEnv, jclass cls, jstring filesDir)
         __android_log_print(ANDROID_LOG_WARN, "SDL", "SDL: Couldn't locate Java callbacks, check that they're named and typed correctly");
     }
     __android_log_print(ANDROID_LOG_INFO, "SDL", "SDL_Android_Init() finished!");
+}
+
+// Handle event on the SDL thread
+void SDL_AndroidHandleEvent() {
+    JNIEnv *env = Android_JNI_GetEnv();
+    (*env)->CallStaticObjectMethod(env, mActivityClass, midHandleSDLEvent);
 }
 
 /* Resize */

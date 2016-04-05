@@ -425,6 +425,10 @@ public class SDLActivity extends Activity {
         return SDLActivity.mSurface.getNativeSurface();
     }
 
+    public static void handlSDLEvent() {
+        SDLHandler.handle();
+    }
+
     // Audio
     public static int audioInit(int sampleRate, boolean is16Bit, boolean isStereo, int desiredFrames) {
         int channelConfig = isStereo ? AudioFormat.CHANNEL_CONFIGURATION_STEREO : AudioFormat.CHANNEL_CONFIGURATION_MONO;

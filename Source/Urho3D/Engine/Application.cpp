@@ -33,6 +33,8 @@
 
 #include "../DebugNew.h"
 
+extern "C" void SDL_AndroidHandleEvent();
+
 namespace Urho3D
 {
 
@@ -83,8 +85,12 @@ int Application::Run()
 
         // Platforms other than iOS and Emscripten run a blocking main loop
 #if !defined(IOS) && !defined(__EMSCRIPTEN__)
-        while (!engine_->IsExiting())
+        while (!engine_->IsExiting()) {
             engine_->RunFrame();
+#if defined(ANDROID)
+            SDL_AndroidHandleEvent();
+#endif
+        }
 
         Stop();
         // iOS will setup a timer for running animation frames so eg. Game Center can run. In this case we do not
