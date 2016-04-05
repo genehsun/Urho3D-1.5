@@ -24,6 +24,9 @@ import android.graphics.*;
 import android.media.*;
 import android.hardware.*;
 
+import org.keplerproject.luajava.LuaState;
+import org.keplerproject.luajava.LuaStateFactory;
+
 
 /**
     SDL Activity
@@ -47,6 +50,9 @@ public class SDLActivity extends Activity {
     
     // Audio
     protected static AudioTrack mAudioTrack;
+
+    // LuaState
+    protected static LuaState mLuaState;
 
     // Urho3D: flag to load the .so and a new method load them
     private static boolean mIsSharedLibraryLoaded = false;
@@ -427,6 +433,14 @@ public class SDLActivity extends Activity {
 
     public static void handlSDLEvent() {
         SDLHandler.handle();
+    }
+
+    public static void createLuaRuntime() {
+        mLuaState = LuaStateFactory.newLuaState();
+    }
+
+    public static LuaState getLuaState() {
+        return mLuaState;
     }
 
     // Audio

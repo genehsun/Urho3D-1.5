@@ -74,6 +74,16 @@ extern int tolua_Urho2DLuaAPI_open(lua_State*);
 #endif
 extern int tolua_LuaScriptLuaAPI_open(lua_State*);
 
+#if defined(ANDROID)
+static LuaScript* msLuaScript = NULL;
+
+extern "C" void Android_CreateLuaRuntime();
+
+extern "C" lua_State* Android_GetLuaState() {
+    return msLuaScript->GetState();
+}
+#endif
+
 namespace Urho3D
 {
 
@@ -134,6 +144,11 @@ LuaScript::LuaScript(Context* context) :
 
     // Subscribe to console commands
     SetExecuteConsoleCommands(true);
+
+#if defined(ANDROID)
+    msLuaScript = this;
+    Android_CreateLuaRuntime();
+#endif
 }
 
 LuaScript::~LuaScript()
