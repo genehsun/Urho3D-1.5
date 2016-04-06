@@ -1,7 +1,5 @@
 package org.libsdl.app;
 
-import android.util.Log;
-
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**

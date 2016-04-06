@@ -823,10 +823,10 @@ public class LuaState
   {
 	  _openPackage(luaState);
   }
-  public void openLibs()
-  {
-    _openLibs(luaState);
-  }
+//  public void openLibs()
+//  {
+//    _openLibs(luaState);
+//  }
 
 
   /********************** Luajava API Library **********************/
